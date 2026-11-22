@@ -2,7 +2,12 @@
 
 This update builds on the v1 demo and adds an authentication configuration screen and a starter schema for Supabase.
 
-## V3 additions\n- Automatically creates a profile record on signup using a Supabase trigger.\n- Campaign drafts are saved to the signed-in user account when Supabase is connected, otherwise stored locally in the browser.\n- Completed agent simulation runs are recorded to the signed-in user account when connected.\n\n## What is new
+## V3 additions
+- Automatically creates a profile record on signup using a Supabase trigger.
+- Campaign drafts are saved to the signed-in user account when Supabase is connected, otherwise stored locally in the browser.
+- Completed agent simulation runs are recorded to the signed-in user account when connected.
+
+## What is new
 - Supabase URL and public anon key configuration stored in this browser only.
 - Email signup, email/password login, and logout starter flow using Supabase JS v2.
 - SQL schema for profiles, products, campaigns, agent runs, commission events, withdrawals, and subscriptions.
@@ -23,4 +28,7 @@ This update builds on the v1 demo and adds an authentication configuration scree
 - Financial events, withdrawals, balances, affiliate conversions and subscriptions must be validated server-side/webhooks, not trusted from client input.
 - Before production, add server/Edge Functions, secure payout integration, privacy policy, terms, rate limiting, abuse protection, and tests.
 - Withdrawal threshold is R$10 shown as a policy concept; it is not a promise of earnings or a simulated lock/unlock mechanism.
-\n\n## V3 deployment note\nAfter replacing the files in your GitHub repository, run the updated `schema.sql` in Supabase SQL Editor. If you already ran the earlier schema, this file is designed to add the profile trigger; existing tables/policies remain. Test sign-up, campaign saving and simulation history.\n
+
+
+## V3 deployment note
+After replacing the files in your GitHub repository, run the updated `schema.sql` in Supabase SQL Editor. If you already ran the earlier schema, this file is designed to add the profile trigger; existing tables/policies remain. Test sign-up, campaign saving and simulation history.

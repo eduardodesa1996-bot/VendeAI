@@ -44,10 +44,20 @@ alter table public.agent_runs enable row level security;
 alter table public.commission_events enable row level security;
 alter table public.withdrawals enable row level security;
 alter table public.subscriptions enable row level security;
+-- Remove named policies first so this script can be rerun safely.
+drop policy if exists "profile own select" on public.profiles;
+drop policy if exists "profile own insert" on public.profiles;
+drop policy if exists "profile own update" on public.profiles;
+drop policy if exists "products own rows" on public.products;
+drop policy if exists "campaigns own rows" on public.campaigns;
+drop policy if exists "agent_runs own rows" on public.agent_runs;
+drop policy if exists "commission own read" on public.commission_events;
+drop policy if exists "withdrawals own read" on public.withdrawals;
+drop policy if exists "subscriptions own read" on public.subscriptions;
 -- User can read/update their own profile
 create policy "profile own select" on public.profiles for select using (auth.uid()=id);
 create policy "profile own insert" on public.profiles for insert with check (auth.uid()=id);
-create policy "profile own update" on public.profiles for update using (auth.uid()=id);
+create policy "profile own update" on public.profiles for update using (auth.uid()=id) with check (auth.uid()=id);
 -- Own rows for other tables
 create policy "products own rows" on public.products for all using (auth.uid()=user_id) with check (auth.uid()=user_id);
 create policy "campaigns own rows" on public.campaigns for all using (auth.uid()=user_id) with check (auth.uid()=user_id);
