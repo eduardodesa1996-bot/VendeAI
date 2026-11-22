@@ -3,7 +3,7 @@
 (() => {
   const $ = s => document.querySelector(s);
   const status = $('#authStatus'), result = $('#authResult');
-  let client = null;
+  let client = null; window.vendeaiGetClient=()=>client;
   const saved = JSON.parse(localStorage.getItem('vendeai_supabase_config') || '{}');
   if ($('#supabaseUrl')) { $('#supabaseUrl').value = saved.url || ''; $('#supabaseKey').value = saved.key || ''; }
   async function init(url,key){

@@ -58,3 +58,15 @@ create policy "subscriptions own read" on public.subscriptions for select using 
 -- IMPORTANT: payout records, commissions, subscriptions and ledger mutations should be created
 -- by trusted server functions/webhooks, not by the browser. Policies intentionally don't allow
 -- client INSERT/UPDATE for these financial tables.
+
+-- Automatically create a profile when a user signs up (safe to rerun).
+create or replace function public.handle_new_user()
+returns trigger language plpgsql security definer set search_path=public as $$
+begin
+  insert into public.profiles(id,display_name) values (new.id, coalesce(new.raw_user_meta_data->>'display_name',''))
+  on conflict (id) do nothing;
+  return new;
+end; $$;
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created after insert on auth.users
+for each row execute procedure public.handle_new_user();
